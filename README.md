@@ -1,6 +1,6 @@
 # PyQt project
 
-## PyQt Calculator
+## 1. PyQt Calculator
 
-## PyQt NotePad
+## 2. PyQt NotePad
 
