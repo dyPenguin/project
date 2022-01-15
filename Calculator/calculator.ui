@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon2.png</normaloff>icon2.png</iconset>
+    <normaloff>icon/icon.png</normaloff>icon/icon.png</iconset>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
