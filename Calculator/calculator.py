@@ -70,6 +70,9 @@ class Exam(QWidget, form_class):
 
     # 계산 수식을 라벨에 출력
     def lbl_buffer_process(self, number, opcode):
+        if number == float("inf"):
+            self.number = 0.0
+            return 0.0
         self.math_exp.append(str(number))
         self.math_exp.append(opcode)
         lbl_buffer = ''
@@ -86,14 +89,11 @@ class Exam(QWidget, form_class):
 
     # infinity 값일 때 버튼 비활성화
     def btn_disable_process(self, stat):
-        self.btn_add.setEnabled(stat)
-        self.btn_sub.setEnabled(stat)
-        self.btn_mul.setEnabled(stat)
-        self.btn_div.setEnabled(stat)
-        self.btn_point.setEnabled(stat)
-        self.btn_back.setEnabled(stat)
-        self.btn_clear.setEnabled(stat)
-        self.btn_equal.setEnabled(stat)
+        buttons = ['add', 'sub', 'mul', 'div',
+                   'point', 'back', 'clear']
+
+        for item in buttons:
+            getattr(self, 'btn_%s' % item).setEnabled(stat)
 
     # 연산자를 눌렀을 때
     def btn_opcode_process(self):
@@ -112,7 +112,7 @@ class Exam(QWidget, form_class):
 
             # infinity 값일 경우, 더이상 진행할 수 없도록 버튼 비활성화
             if self.result == float('inf'):
-                self.lbl_result.setText('infinity')
+                self.lbl_result.setText('inf')
                 self.opcode = '='
                 self.btn_disable_process(False)
 
@@ -132,11 +132,15 @@ class Exam(QWidget, form_class):
             self.result = self.result * self.number
         elif self.opcode == '/':
             if self.lbl_result.text() == '0.0':
-                self.result = 'infinity'
+                self.result = float('inf')
             else:
                 self.result = self.result / self.number
         elif self.opcode == '=':
             self.result = float(self.lbl_result.text())
+            if self.result == float('inf'):
+                self.btn_disable_process(True)
+                self.result = 0
+
             self.math_exp.clear()
         self.lbl_result.setText(str(self.result))
         self.lbl_buffer.clear()

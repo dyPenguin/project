@@ -215,6 +215,9 @@
          <pointsize>16</pointsize>
         </font>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
        <property name="toolTip">
         <string>=</string>
        </property>
