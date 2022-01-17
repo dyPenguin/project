@@ -6,159 +6,181 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>359</width>
-    <height>324</height>
+    <width>340</width>
+    <height>500</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>340</width>
+    <height>500</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>계산기</string>
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon/icon.png</normaloff>icon/icon.png</iconset>
+    <normaloff>../../pyqt/pyqt-calc/src/icon/icon.ico</normaloff>../../pyqt/pyqt-calc/src/icon/icon.ico</iconset>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
    <item>
-    <layout class="QGridLayout" name="gridLayout">
-     <property name="rightMargin">
+    <widget class="QLabel" name="lbl_text">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="sizeIncrement">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>나눔고딕</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="margin">
+      <number>12</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lbl_result">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>나눔고딕 ExtraBold</family>
+       <pointsize>30</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="lineWidth">
       <number>0</number>
      </property>
-     <item row="7" column="0">
-      <widget class="QPushButton" name="btn_4">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>4</string>
-       </property>
-       <property name="text">
-        <string>4</string>
-       </property>
-       <property name="shortcut">
-        <string>4</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QPushButton" name="btn_7">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>7</string>
-       </property>
-       <property name="text">
-        <string>7</string>
-       </property>
-       <property name="shortcut">
-        <string>7</string>
-       </property>
-      </widget>
-     </item>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="margin">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <property name="leftMargin">
+      <number>1</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>1</number>
+     </property>
+     <property name="bottomMargin">
+      <number>1</number>
+     </property>
+     <property name="spacing">
+      <number>3</number>
+     </property>
      <item row="4" column="1">
-      <widget class="QPushButton" name="btn_clear">
+      <widget class="QPushButton" name="btn_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="toolTip">
-        <string>C</string>
+        <string>2</string>
        </property>
        <property name="text">
-        <string>C</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="3">
-      <widget class="QPushButton" name="btn_sub">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>-</string>
-       </property>
-       <property name="text">
-        <string>-</string>
+        <string>2</string>
        </property>
        <property name="shortcut">
-        <string>-</string>
+        <string>2</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="2">
-      <widget class="QPushButton" name="btn_6">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>6</string>
-       </property>
-       <property name="text">
-        <string>6</string>
-       </property>
-       <property name="shortcut">
-        <string>6</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QPushButton" name="btn_8">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>8</string>
-       </property>
-       <property name="text">
-        <string>8</string>
-       </property>
-       <property name="shortcut">
-        <string>8</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="3">
-      <widget class="QPushButton" name="btn_add">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>+</string>
-       </property>
-       <property name="text">
-        <string>+</string>
-       </property>
-       <property name="shortcut">
-        <string>+</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
+     <item row="3" column="1">
       <widget class="QPushButton" name="btn_5">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -172,12 +194,170 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="2">
-      <widget class="QPushButton" name="btn_9">
+     <item row="3" column="0">
+      <widget class="QPushButton" name="btn_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>4</string>
+       </property>
+       <property name="text">
+        <string>4</string>
+       </property>
+       <property name="shortcut">
+        <string>4</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="btn_7">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>7</string>
+       </property>
+       <property name="text">
+        <string>7</string>
+       </property>
+       <property name="shortcut">
+        <string>7</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btn_clear">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>clear</string>
+       </property>
+       <property name="text">
+        <string>C</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QPushButton" name="btn_6">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>6</string>
+       </property>
+       <property name="text">
+        <string>6</string>
+       </property>
+       <property name="shortcut">
+        <string>6</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="btn_1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>1</string>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="shortcut">
+        <string>1</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QPushButton" name="btn_9">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="toolTip">
@@ -192,34 +372,161 @@
       </widget>
      </item>
      <item row="4" column="3">
-      <widget class="QPushButton" name="btn_back">
+      <widget class="QPushButton" name="btn_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
+       <property name="toolTip">
+        <string>3</string>
+       </property>
        <property name="text">
-        <string>←</string>
+        <string>3</string>
        </property>
        <property name="shortcut">
-        <string>Backspace</string>
+        <string>3</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="2">
-      <widget class="QPushButton" name="btn_equal">
+     <item row="1" column="1">
+      <widget class="QPushButton" name="btn_8">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
-       <property name="focusPolicy">
-        <enum>Qt::StrongFocus</enum>
+       <property name="toolTip">
+        <string>8</string>
+       </property>
+       <property name="text">
+        <string>8</string>
+       </property>
+       <property name="shortcut">
+        <string>8</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="btn_reset">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
        <property name="toolTip">
-        <string>=</string>
+        <string>reset</string>
+       </property>
+       <property name="text">
+        <string>AC</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="btn_div">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>/</string>
+       </property>
+       <property name="text">
+        <string>÷</string>
+       </property>
+       <property name="shortcut">
+        <string>/</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4">
+      <widget class="QPushButton" name="btn_add">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>+</string>
+       </property>
+       <property name="text">
+        <string>＋</string>
+       </property>
+       <property name="shortcut">
+        <string>+</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3" colspan="2">
+      <widget class="QPushButton" name="btn_equal">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>enter</string>
        </property>
        <property name="text">
         <string>=</string>
@@ -229,187 +536,144 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
-      <widget class="QPushButton" name="btn_2">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>2</string>
-       </property>
-       <property name="text">
-        <string>2</string>
-       </property>
-       <property name="shortcut">
-        <string>2</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="2">
-      <widget class="QPushButton" name="btn_3">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>3</string>
-       </property>
-       <property name="text">
-        <string>3</string>
-       </property>
-       <property name="shortcut">
-        <string>3</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0">
-      <widget class="QPushButton" name="btn_1">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="shortcut">
-        <string>1</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="0">
-      <widget class="QPushButton" name="btn_0">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>0</string>
-       </property>
-       <property name="text">
-        <string>0</string>
-       </property>
-       <property name="shortcut">
-        <string>0</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="3">
+     <item row="1" column="4">
       <widget class="QPushButton" name="btn_mul">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>*</string>
-       </property>
-       <property name="text">
-        <string>*</string>
-       </property>
-       <property name="shortcut">
-        <string>*</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="1">
-      <widget class="QPushButton" name="btn_point">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>.</string>
-       </property>
-       <property name="text">
-        <string>.</string>
-       </property>
-       <property name="shortcut">
-        <string>.</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="3">
-      <widget class="QPushButton" name="btn_div">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>/</string>
-       </property>
-       <property name="text">
-        <string>/</string>
-       </property>
-       <property name="shortcut">
-        <string>/</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QPushButton" name="btn_all_clear">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>AC</string>
-       </property>
-       <property name="text">
-        <string>AC</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" rowspan="3" colspan="4">
-      <widget class="QLabel" name="lbl_result">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
+         <family>나눔고딕</family>
          <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
+       </property>
+       <property name="toolTip">
+        <string>*</string>
+       </property>
+       <property name="text">
+        <string>×</string>
+       </property>
+       <property name="shortcut">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="btn_del">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕 ExtraBold</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>backspace</string>
+       </property>
+       <property name="text">
+        <string>←</string>
+       </property>
+       <property name="shortcut">
+        <string>Backspace</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QPushButton" name="btn_sub">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>-</string>
+       </property>
+       <property name="text">
+        <string>－</string>
+       </property>
+       <property name="shortcut">
+        <string>-</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QPushButton" name="btn_point">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>.</string>
+       </property>
+       <property name="text">
+        <string>.</string>
+       </property>
+       <property name="shortcut">
+        <string>.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QPushButton" name="btn_0">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>나눔고딕</family>
+         <pointsize>20</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string>0</string>
        </property>
        <property name="text">
         <string>0</string>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-       <property name="margin">
-        <number>10</number>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2" colspan="2">
-      <widget class="QLabel" name="lbl_buffer">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <property name="shortcut">
+        <string>0</string>
        </property>
       </widget>
      </item>

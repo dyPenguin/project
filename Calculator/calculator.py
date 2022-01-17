@@ -5,16 +5,16 @@ from PyQt5 import uic
 form_class = uic.loadUiType('./calculator.ui')[0]  # UI 파일(XML)을 파이썬 코드로 불러오기
 
 
-class Exam(QWidget, form_class):
+class Form(QWidget, form_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.initUI()
 
         self.first_input_flag = False  # 첫 번째 입력 flag
-        self.btn_all_clear_clicked_slot()
+        self.btn_reset_clicked_slot()
         self.opcode = ''
-        self.buffer = self.lbl_buffer.text()
+        self.buffer = self.lbl_text.text()
         self.math_exp = list()   # 계산 수식을 담을 리스트
 
     def initUI(self):
@@ -28,9 +28,9 @@ class Exam(QWidget, form_class):
 
         self.btn_equal.clicked.connect(self.btn_opcode_process)
 
-        self.btn_all_clear.clicked.connect(self.btn_all_clear_clicked_slot)
+        self.btn_reset.clicked.connect(self.btn_reset_clicked_slot)
         self.btn_clear.clicked.connect(self.btn_clear_clicked_slot)
-        self.btn_back.clicked.connect(self.btn_back_clicked_slot)
+        self.btn_del.clicked.connect(self.btn_del_clicked_slot)
         self.btn_point.clicked.connect(self.btn_point_process)
 
     # 숫자 버튼을 눌렀을 때
@@ -45,7 +45,7 @@ class Exam(QWidget, form_class):
             self.lbl_result.setText('')
 
         if self.opcode == '=':
-            self.lbl_buffer.clear()
+            self.lbl_text.clear()
             self.math_exp.clear()
             self.lbl_result.setText('')
             self.opcode = ''
@@ -69,7 +69,7 @@ class Exam(QWidget, form_class):
             self.lbl_result.setText(str_lbl + '.')
 
     # 계산 수식을 라벨에 출력
-    def lbl_buffer_process(self, number, opcode):
+    def lbl_text_process(self, number, opcode):
         if number == float("inf"):
             self.number = 0.0
             return 0.0
@@ -80,7 +80,7 @@ class Exam(QWidget, form_class):
 
         for item in self.math_exp:
             lbl_buffer += item + ' '
-        self.lbl_buffer.setText(lbl_buffer)
+        self.lbl_text.setText(lbl_buffer)
 
         if self.math_exp[-1] == '=':
             self.math_exp.clear()
@@ -90,7 +90,7 @@ class Exam(QWidget, form_class):
     # infinity 값일 때 버튼 비활성화
     def btn_disable_process(self, stat):
         buttons = ['add', 'sub', 'mul', 'div',
-                   'point', 'back', 'clear']
+                   'point', 'del', 'clear']
 
         for item in buttons:
             getattr(self, 'btn_%s' % item).setEnabled(stat)
@@ -118,19 +118,19 @@ class Exam(QWidget, form_class):
 
             self.opcode = self.sender().text()  # 눌린 버튼 저장.
 
-        if self.lbl_buffer_process(self.number, self.opcode):
+        if self.lbl_text_process(self.number, self.opcode):
             self.first_input_flag = False
             self.buffer = ''
 
     # 입력 값 계산
     def calculate(self):
-        if self.opcode == '+':
+        if self.opcode == '＋':
             self.result = self.result + self.number
-        elif self.opcode == '-':
+        elif self.opcode == '－':
             self.result = self.result - self.number
-        elif self.opcode == '*':
+        elif self.opcode == '×':
             self.result = self.result * self.number
-        elif self.opcode == '/':
+        elif self.opcode == '÷':
             if self.lbl_result.text() == '0.0':
                 self.result = float('inf')
             else:
@@ -143,7 +143,7 @@ class Exam(QWidget, form_class):
 
             self.math_exp.clear()
         self.lbl_result.setText(str(self.result))
-        self.lbl_buffer.clear()
+        self.lbl_text.clear()
 
     # '=' 버튼을 눌렀을 때
     def btn_equal_clicked_process(self):
@@ -152,22 +152,22 @@ class Exam(QWidget, form_class):
         self.opcode = '='  # '=' 를 눌렀을때 결과값이 출력 되도록 하기 위해선 op연산자를 초기화 해야 함.
 
     # AC 버튼을 눌렀을 때
-    def btn_all_clear_clicked_slot(self):
+    def btn_reset_clicked_slot(self):
         self.btn_disable_process(True)
         self.number = 0
         self.opcode = '='
         self.lbl_result.setText('0')
-        self.lbl_buffer.setText('')
+        self.lbl_text.setText('')
         self.first_input_flag = False
 
     # C 버튼을 눌렀을 때
     def btn_clear_clicked_slot(self):
         self.lbl_result.setText('0')
         self.first_input_flag = True
-        # self.lbl_buffer.setText('')
+        # self.lbl_text.setText('')
 
     # Backspace 버튼을 눌렀을 때
-    def btn_back_clicked_slot(self):
+    def btn_del_clicked_slot(self):
         text = self.lbl_result.text()
         self.first_input_flag = False
 
@@ -190,6 +190,6 @@ class Exam(QWidget, form_class):
 
 
 app = QApplication(sys.argv)
-mainWindow = Exam()
-mainWindow.show()
+winForm = Form()
+winForm.show()
 sys.exit(app.exec_())  # 이벤트 루프
