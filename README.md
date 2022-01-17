@@ -14,5 +14,5 @@ These apps are written in Python using the PyQt framework.
 - Qt Designer (Only for developers for editing layouts)
 
 ## The apps
-1. **[Calculator](https://github.com/dyshim/PyQt5-Apps/tree/master/Calculator#readme)**
+1. **[Calculator](https://github.com/dyshim/PyQt5-Apps/tree/main/Calculator#readme)**
 2. **[NotePad]()**
