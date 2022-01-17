@@ -1,186 +1,178 @@
+import re
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 
+import operator
+
 form_class = uic.loadUiType('./calculator.ui')[0]  # UI 파일(XML)을 파이썬 코드로 불러오기
+
+
+def numberTypeCasting(value):
+    if float(value) == int(value):
+        return int(value)
+
+    return float(value)
 
 
 class Form(QWidget, form_class):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.initUI()
 
-        self.first_input_flag = False  # 첫 번째 입력 flag
-        self.btn_reset_clicked_slot()
-        self.opcode = ''
-        self.buffer = self.lbl_text.text()
-        self.math_exp = list()   # 계산 수식을 담을 리스트
+        self.initUI()
+        self.reset()
+
+        self.history = list()
 
     def initUI(self):
+        # Setup numbers
         for n in range(0, 10):
-            getattr(self, "btn_%s" % n).clicked.connect(self.btn_number_process)
+            getattr(self, "btn_%s" % n).pressed.connect(self.setInputNumberValue)
 
-        self.btn_add.clicked.connect(self.btn_opcode_process)
-        self.btn_sub.clicked.connect(self.btn_opcode_process)
-        self.btn_mul.clicked.connect(self.btn_opcode_process)
-        self.btn_div.clicked.connect(self.btn_opcode_process)
+        # Setup operations
+        self.btn_add.pressed.connect(lambda: self.operation(operator.add))
+        self.btn_sub.pressed.connect(lambda: self.operation(operator.sub))
+        self.btn_mul.pressed.connect(lambda: self.operation(operator.mul))
+        self.btn_div.pressed.connect(lambda: self.operation(operator.truediv))
 
-        self.btn_equal.clicked.connect(self.btn_opcode_process)
+        self.btn_equal.pressed.connect(self.equals)
 
-        self.btn_reset.clicked.connect(self.btn_reset_clicked_slot)
-        self.btn_clear.clicked.connect(self.btn_clear_clicked_slot)
-        self.btn_del.clicked.connect(self.btn_del_clicked_slot)
-        self.btn_point.clicked.connect(self.btn_point_process)
+        self.btn_del.pressed.connect(self.backDelete)
+        self.btn_clear.pressed.connect(self.clear)
+        self.btn_reset.pressed.connect(self.reset)
+        self.btn_point.pressed.connect(self.setInputDecimalPoint)
 
-    # 숫자 버튼을 눌렀을 때
-    def btn_number_process(self):
-        self.btn_disable_process(True)
+    def reset(self):
+        # AC 버튼을 눌렀을 때
+        self.buttonStatSwitch(True)
+        self.inputOK = False  # 피연산자 입력 상태 확인
+        self.current_op = None
+        self.stack = [0]
+        self.math_exp = list()  # 수식을 담을 리스트
 
-        if self.lbl_result.text() == '0':
-            self.first_input_flag = True
+        self.display(str(self.stack[-1]))
 
-        if self.first_input_flag:
-            self.first_input_flag = False
-            self.lbl_result.setText('')
+    def setInputNumberValue(self):
+        # 숫자 버튼을 입력했을 때
+        text = self.lbl_result.text().replace(",", "")
 
-        if self.opcode == '=':
-            self.lbl_text.clear()
-            self.math_exp.clear()
-            self.lbl_result.setText('')
-            self.opcode = ''
+        if text == "inf":
+            self.reset()
 
-        # 클릭한 버튼 값을 화면에 출력
-        text = self.lbl_result.text()
-        self.lbl_result.setText(text + self.sender().text())
+        if not self.inputOK or text == "0":
+            self.inputOK = True
+            text = ""
 
-    # . 을 입력했을 경우
-    def btn_point_process(self):
-        if self.opcode == '=':
-            self.opcode = ''
+        if self.inputOK:
+            # 최대 11자리까지 입력 가능 (소수점 포함)
+            if len(text) < 10:
+                self.display(text + self.sender().text())
 
-        if self.first_input_flag:
-            self.lbl_result.setText('0')
+    def display(self, text):
+        # 입력한 값 화면에 출력
+        self.lbl_result.setText(str(self.getInsertCommaValue(text)))
+        self.lbl_text.setText(" ".join(str(v) for v in self.math_exp))
 
-        self.first_input_flag = False
-        str_lbl = self.lbl_result.text()
+        if text != "inf":
+            self.stack[-1] = eval(text)
 
-        if '.' not in self.lbl_result.text():
-            self.lbl_result.setText(str_lbl + '.')
+    def getInsertCommaValue(self, text):
+        # 3자리 마다 콤마(,) 삽입
+        reg = r'(?<=\d)(?=(\d{3})+(?!\d))'
+        if "." in text:
+            return self.getInsertCommaValue(text[:text.find('.')]) + text[text.find('.'):]
+        else:
+            return re.sub(reg, ',', text)
 
-    # 계산 수식을 라벨에 출력
-    def lbl_text_process(self, number, opcode):
-        if number == float("inf"):
-            self.number = 0.0
-            return 0.0
-        self.math_exp.append(str(number))
-        self.math_exp.append(opcode)
-        lbl_buffer = ''
-        result = ''
+    def setInputDecimalPoint(self):
+        # '.' 버튼을 입력했을 때
+        if not self.inputOK:
+            self.inputOK = True
+            self.stack[-1] = 0
 
-        for item in self.math_exp:
-            lbl_buffer += item + ' '
-        self.lbl_text.setText(lbl_buffer)
+        if "." not in str(self.stack[-1]):
+            self.display(str(self.stack[-1]) + ".")
 
-        if self.math_exp[-1] == '=':
-            self.math_exp.clear()
-            result = self.lbl_result.text()
-        return result
+    def getDisplayValue(self):
+        return numberTypeCasting(eval(self.lbl_result.text().replace(",", "")))
 
-    # infinity 값일 때 버튼 비활성화
-    def btn_disable_process(self, stat):
-        buttons = ['add', 'sub', 'mul', 'div',
-                   'point', 'del', 'clear']
+    def operation(self, op_func):
+        # 연산자 버튼을 입력했을 때
+        self.stack[-1] = self.getDisplayValue()
+        # print(f"Stack state {self.stack} \nCurrent stack value type {type(self.stack[-1])}")
+
+        if self.inputOK:
+            self.inputOK = False
+            if self.current_op:
+                self.equals()
+
+        self.current_op = op_func
+        self.math_exp = [self.stack[0], self.sender().text()]
+
+        self.display(str(self.stack[-1]))
+
+        if len(self.stack) < 2:
+            self.stack.append(0)
+
+    def equals(self):
+        self.stack[-1] = self.getDisplayValue()
+        self.math_exp += [self.stack[-1], "="]
+
+        if self.current_op:
+            try:
+                print(f"===='{self.math_exp[1]}' 연산 START! ====")
+                result = self.current_op(*self.stack)
+                print(f"Stack: {self.stack} \n"
+                      f"연산 결과: {round(result, 8)} \n")
+                self.stack = [numberTypeCasting(round(result, 8))]
+            except Exception as e:
+                if ZeroDivisionError:
+                    self.stack[-1] = float("inf")
+                self.buttonStatSwitch(False)
+                print(f"Error: {e}")
+
+        self.display(str(self.stack[-1]))
+
+        self.math_exp.append(self.stack[-1])
+        self.history.append(self.math_exp.copy())
+        print(f"3 Recent Records History: {self.history[::-1][:3]}")
+
+        self.inputOK = False
+        self.current_op = None
+        self.math_exp.clear()
+
+    def buttonStatSwitch(self, stat):
+        # 예외 발생 시, 버튼 상태 변경
+        buttons = ['add', 'sub', 'mul',
+                   'div', 'point', 'equal']
 
         for item in buttons:
             getattr(self, 'btn_%s' % item).setEnabled(stat)
 
-    # 연산자를 눌렀을 때
-    def btn_opcode_process(self):
-        # 연산자를 연속으로 눌렀을 때
-        if self.first_input_flag:
-            self.opcode = self.sender().text()
-            self.math_exp = self.math_exp[:len(self.math_exp) - 2]
+    def backDelete(self):
+        # Backspace 버튼 처리
+        lbl = self.lbl_result
+        text = lbl.text().replace(",", "")
 
-        else:
-            self.first_input_flag = True  # 첫 번째 피연산자 입력이 끝나면 flag 값 변경
-            self.number = float(self.lbl_result.text())
-            self.lbl_result.setText(str(self.number))
-            if self.opcode != '':
-                self.calculate()
-            self.result = float(self.lbl_result.text())
-
-            # infinity 값일 경우, 더이상 진행할 수 없도록 버튼 비활성화
-            if self.result == float('inf'):
-                self.lbl_result.setText('inf')
-                self.opcode = '='
-                self.btn_disable_process(False)
-
-            self.opcode = self.sender().text()  # 눌린 버튼 저장.
-
-        if self.lbl_text_process(self.number, self.opcode):
-            self.first_input_flag = False
-            self.buffer = ''
-
-    # 입력 값 계산
-    def calculate(self):
-        if self.opcode == '＋':
-            self.result = self.result + self.number
-        elif self.opcode == '－':
-            self.result = self.result - self.number
-        elif self.opcode == '×':
-            self.result = self.result * self.number
-        elif self.opcode == '÷':
-            if self.lbl_result.text() == '0.0':
-                self.result = float('inf')
+        if self.inputOK:
+            if len(lbl.text()) == 1:
+                self.display("0")
             else:
-                self.result = self.result / self.number
-        elif self.opcode == '=':
-            self.result = float(self.lbl_result.text())
-            if self.result == float('inf'):
-                self.btn_disable_process(True)
-                self.result = 0
-
-            self.math_exp.clear()
-        self.lbl_result.setText(str(self.result))
-        self.lbl_text.clear()
-
-    # '=' 버튼을 눌렀을 때
-    def btn_equal_clicked_process(self):
-        self.first_input_flag = True
-        self.calculate()
-        self.opcode = '='  # '=' 를 눌렀을때 결과값이 출력 되도록 하기 위해선 op연산자를 초기화 해야 함.
-
-    # AC 버튼을 눌렀을 때
-    def btn_reset_clicked_slot(self):
-        self.btn_disable_process(True)
-        self.number = 0
-        self.opcode = '='
-        self.lbl_result.setText('0')
-        self.lbl_text.setText('')
-        self.first_input_flag = False
-
-    # C 버튼을 눌렀을 때
-    def btn_clear_clicked_slot(self):
-        self.lbl_result.setText('0')
-        self.first_input_flag = True
-        # self.lbl_text.setText('')
-
-    # Backspace 버튼을 눌렀을 때
-    def btn_del_clicked_slot(self):
-        text = self.lbl_result.text()
-        self.first_input_flag = False
-
-        if self.opcode == '=':
-            self.opcode = ''
-
-        if len(text) == 1 or text == 'infinity':
-            self.lbl_result.setText("0")
+                self.display(text[:-1])
         else:
-            self.lbl_result.setText(text[:len(text) - 1])
+            if text == "inf":
+                self.reset()
 
-    # 창 닫기
+    def clear(self):
+        # C 버튼을 입력했을 때
+        if self.lbl_result.text() == "inf":
+            self.reset()
+
+        self.display("0")
+
     def closeEvent(self, QCloseEvent):
+        # 창 닫기
         ans = QMessageBox.question(self, '종료하기', '종료하시겠습니까?', QMessageBox.Yes | QMessageBox.No,
                                    QMessageBox.Yes)
         if ans == QMessageBox.Yes:
@@ -189,7 +181,8 @@ class Form(QWidget, form_class):
             QCloseEvent.ignore()
 
 
-app = QApplication(sys.argv)
-winForm = Form()
-winForm.show()
-sys.exit(app.exec_())  # 이벤트 루프
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    winForm = Form()
+    winForm.show()
+    sys.exit(app.exec_())  # 이벤트 루프
