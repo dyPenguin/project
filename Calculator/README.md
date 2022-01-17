@@ -35,7 +35,7 @@ The calculator application implemented in Python using PyQt5. The Ui was designe
 ## 개선해야 할 사항
 - 부동 소수점 입력 시, 지수 형태로 출력
 - 음수 입력 기능 필요
-- 자리수 구분 , 필요 → 추가 구현 완료
+- 자리수 구분 , 필요 ← 구현 완료 (+22.01.14)
 
 
 
