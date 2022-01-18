@@ -129,7 +129,7 @@ class Form(QMainWindow, form_window):
 
     def answer_to_save(self):
         # 사용자에게 저장 여부 요청
-        msgBox = QMessageBox()
+        msgBox = QMessageBox(self)
         msgBox.setWindowTitle("Penguin's 메모장")
         msgBox.setText(f"변경 내용을 {self.path}에 저장하시겠습니까?")
         msgBox.addButton("저장", QMessageBox.YesRole)  # 0
