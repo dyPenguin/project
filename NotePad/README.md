@@ -20,7 +20,6 @@ UI and features cloned Windows Notepad.
 
 ## Feature
 - 오픈된 파일의 파일명을 제목표시줄에 표시
-- 작성 내용에 변화가 감지되면 제목 표시줄에 반영되도록 구현
-- 수정된 내용이 없을 경우에도 제목 표시줄에 * 제거
-![notepad-4](https://user-images.githubusercontent.com/69224744/149991499-834cd048-4f40-43c0-a248-ecc15363f557.gif)
+- 작성 내용에 변화가 감지되면 제목 표시줄에 반영되도록 구현. 변경 사항이 없을 경우, * 제거
+  ![notepad-4](https://user-images.githubusercontent.com/69224744/149991499-834cd048-4f40-43c0-a248-ecc15363f557.gif)
 
