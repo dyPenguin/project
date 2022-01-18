@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>NotePad</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon/notes.ico</normaloff>icon/notes.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="leftMargin">
@@ -28,7 +32,17 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QPlainTextEdit" name="plainTextEdit"/>
+     <widget class="QPlainTextEdit" name="pe">
+      <property name="font">
+       <font>
+        <family>굴림</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -38,12 +52,12 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="menu_f">
     <property name="title">
-     <string>파일</string>
+     <string>파일(&amp;F)</string>
     </property>
     <addaction name="action_new"/>
     <addaction name="action_open"/>
@@ -52,9 +66,9 @@
     <addaction name="separator"/>
     <addaction name="action_close"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
+   <widget class="QMenu" name="menu_e">
     <property name="title">
-     <string>편집</string>
+     <string>편집(&amp;E)</string>
     </property>
     <addaction name="action_undo"/>
     <addaction name="action_redo"/>
@@ -66,27 +80,27 @@
     <addaction name="separator"/>
     <addaction name="action_all_select"/>
    </widget>
-   <widget class="QMenu" name="menu_3">
+   <widget class="QMenu" name="menu_o">
     <property name="title">
-     <string>서식</string>
+     <string>서식(&amp;O)</string>
     </property>
     <addaction name="action_font"/>
    </widget>
-   <widget class="QMenu" name="menu_4">
+   <widget class="QMenu" name="menu_h">
     <property name="title">
-     <string>도움말</string>
+     <string>도움말(&amp;H)</string>
     </property>
     <addaction name="action_about"/>
    </widget>
-   <addaction name="menu"/>
-   <addaction name="menu_2"/>
-   <addaction name="menu_3"/>
-   <addaction name="menu_4"/>
+   <addaction name="menu_f"/>
+   <addaction name="menu_e"/>
+   <addaction name="menu_o"/>
+   <addaction name="menu_h"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_new">
    <property name="text">
-    <string>새로 만들기</string>
+    <string>새로 만들기(&amp;N)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -94,7 +108,7 @@
   </action>
   <action name="action_open">
    <property name="text">
-    <string>열기</string>
+    <string>열기(&amp;O)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -102,7 +116,7 @@
   </action>
   <action name="action_save">
    <property name="text">
-    <string>저장</string>
+    <string>저장(&amp;S)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -110,7 +124,7 @@
   </action>
   <action name="action_save_as">
    <property name="text">
-    <string>다른 이름으로 저장</string>
+    <string>다른 이름으로 저장(&amp;A)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
@@ -118,12 +132,12 @@
   </action>
   <action name="action_close">
    <property name="text">
-    <string>끝내기</string>
+    <string>끝내기(&amp;X)</string>
    </property>
   </action>
   <action name="action_cut">
    <property name="text">
-    <string>잘라내기</string>
+    <string>잘라내기(&amp;T)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
@@ -131,7 +145,7 @@
   </action>
   <action name="action_copy">
    <property name="text">
-    <string>복사</string>
+    <string>복사(&amp;C)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
@@ -139,7 +153,7 @@
   </action>
   <action name="action_paste">
    <property name="text">
-    <string>붙여넣기</string>
+    <string>붙여넣기(&amp;P)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
@@ -147,7 +161,7 @@
   </action>
   <action name="action_del">
    <property name="text">
-    <string>삭제</string>
+    <string>삭제(&amp;L)</string>
    </property>
    <property name="shortcut">
     <string>Del</string>
@@ -155,17 +169,17 @@
   </action>
   <action name="action_font">
    <property name="text">
-    <string>글꼴</string>
+    <string>글꼴(&amp;F)</string>
    </property>
   </action>
   <action name="action_about">
    <property name="text">
-    <string>메모장 정보</string>
+    <string>메모장 정보(&amp;I)</string>
    </property>
   </action>
   <action name="action_undo">
    <property name="text">
-    <string>실행 취소</string>
+    <string>실행 취소(&amp;U)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
@@ -173,7 +187,7 @@
   </action>
   <action name="action_redo">
    <property name="text">
-    <string>다시 실행</string>
+    <string>다시 실행(&amp;R)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+Z</string>
@@ -181,7 +195,7 @@
   </action>
   <action name="action_all_select">
    <property name="text">
-    <string>모두 선택</string>
+    <string>모두 선택(&amp;A)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>

@@ -1,187 +1,168 @@
+import os.path
 import sys
 
-from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+from infoDig import AboutDialog
+
 form_window = uic.loadUiType('./notepad.ui')[0]
 
-class Exam(QMainWindow, form_window):
+
+class Form(QMainWindow, form_window):
     def __init__(self):
-        self.open_flag = False  #새 파일인지 여부 확인.
-        self.file = ('제목 없음','')    #(경로, 저장 타입)
-        super().__init__()
+        super(Form, self).__init__()
         self.setupUi(self)
         self.initUI()
-        self.setWindowTitle('NotePad - ' + self.file[0])
+
+        self.path = "제목 없음"
+        self.isOpened = False  # 파일 오픈 상태 확인
+
+        # Update the title
+        self.update_title(self.path)
 
     def initUI(self):
-        self.action_save_as.triggered.connect(self.action_save_as_slot)   #connect(괄호 주의!)
-        self.action_save.triggered.connect(self.action_save_slot)
-        self.action_open.triggered.connect(self.action_open_slot)
-        self.action_font.triggered.connect(self.action_font_slot)
-        self.action_close.triggered.connect(self.action_close_slot)
-        self.action_cut.triggered.connect(self.action_cut_slot)
-        self.action_copy.triggered.connect(self.action_copy_slot)
-        self.action_paste.triggered.connect(self.action_paste_slot)
-        self.action_del.triggered.connect(self.action_del_slot)
-        self.action_undo.triggered.connect(self.action_undo_slot)
-        self.action_redo.triggered.connect(self.action_redo_slot)
-        self.action_all_select.triggered.connect(self.action_all_select_slot)
-        self.action_about.triggered.connect(self.action_about_slot)
-        self.action_new.triggered.connect(self.action_new_slot)
+        # File menu
+        self.action_open.triggered.connect(self.file_open)
+        self.action_save.triggered.connect(self.file_save)
+        self.action_save_as.triggered.connect(self.file_save_as)
+        self.action_new.triggered.connect(self.file_new)
+        self.action_close.triggered.connect(self.close)
 
-    def setTitle(self):
-        Title = self.file[0]
-        if Title == '' :
-            Title = '제목 없음'
-        Title = Title.split('/')
-        self.setWindowTitle('NotePad - ' + Title[-1])
+        # Edit menu
+        self.action_undo.triggered.connect(self.pe.undo)
+        self.action_redo.triggered.connect(self.pe.redo)
+        self.action_all_select.triggered.connect(self.pe.selectAll)
+        self.action_cut.triggered.connect(self.pe.cut)
+        self.action_copy.triggered.connect(self.pe.copy)
+        self.action_paste.triggered.connect(self.pe.paste)
+        self.action_del.triggered.connect(self.pe.cut)
 
+        # Option menu
+        self.action_font.triggered.connect(self.set_font)
 
-    """
-    *** 파일 저장 함수 ***
-    - ① FileDialog 는 운영체제의 종속적임.
-    - ② .getSaveFileName은 파일 경로만 return 해줌.
-    - ③ with 문을 쓰면 close를 쓰지 않아도 됨.
-    - ④ path는 튜플의 형태이기 때문에 인덱스 지정 중요!
-    """
+        self.action_about.triggered.connect(self.form_info)
 
-    # 다른 이름으로 저장
-    def action_save_as_slot(self):
-        path = self.file
-        self.file = QFileDialog.getSaveFileName(self, "save file", "",
-                                          "Text Files(*.txt);;Python Files(*.py);;All Files(*.*)", "") #1, 2 / path 에 튜플 형태의 파일 return.
+        self.pe.textChanged.connect(lambda: self.update_title(self.path))
 
-        if self.file[0] :
-            str_write = self.plainTextEdit.toPlainText()    #plainText에 있는 문자열들을 읽어옴
-            with open(self.file[0], 'w') as f: #3, 4
-                f.write(str_write)
-            self.open_flag = True
-        else :
-            self.file = path
-        self.setTitle()
-        # print(self.file)
-        # print(self.open_flag)
+    def update_title(self, title):
+        print("== Update Title Execute ==")
+        if title != "제목 없음":
+            title = os.path.splitext(os.path.basename(self.path))[0]
 
-    # 수정 여부 확인
-    def is_edited(self):
-        str_plain = self.plainTextEdit.toPlainText()
-        if self.open_flag :
-            with open(self.file[0]) as f:
-                str_file = f.read()
-            return str_plain != str_file    #다르면(변경 O) True, 같으면(변경 X) False 를 return.
-        else :
-            return str_plain != ''
+        if self.isTextChanged():
+            title = "*" + title
 
-    # 저장 여부 확인
-    def answer_user(self):
-        msg_box = QMessageBox()
-        msg_box.setText('변경 내용을 ' + self.file[0] + ' 에 저장하시겠습니까?') #setText 는 + 로 연결.
-        msg_box.addButton('저장', QMessageBox.YesRole)  # YesRole 은 0 을 return.
-        msg_box.addButton('저장 안함', QMessageBox.NoRole)  # YesRole 은 1 을 return.
-        msg_box.addButton('취소', QMessageBox.RejectRole)  # YesRole 은 2 을 return.
-        return msg_box.exec_()
+        self.setWindowTitle(f"{title} - Penguin's 메모장")
 
-    def save_edited(self):
-        if self.is_edited() :
-            answer = self.answer_user()
-            if answer == 0 :
-                if self.open_flag :
-                    with open(self.file[0], 'w') as f:
-                        f.write(self.plainTextEdit.toPlainText())
-                else :  #save 창 오픈.
-                    self.action_save_as_slot()
-            elif answer == 2 :  #취소 버튼 눌렀을 때
-                return answer
+    def file_open(self):  # 열기(O)
+        print("== File Open Execute ==")
+        if self.isTextChanged():
+            # 내용이 변경된 상태에서 취소 버튼 클릭 시
+            if self.answer_to_save() == 2:
+                return 0
 
-    # 새로 만들기
-    def action_new_slot(self):
-        if self.save_edited() != 2 :
-            self.plainTextEdit.setPlainText('')
-            self.open_flag = False
-            self.file = ('제목 없음', '')
-            self.setTitle()
+        f_name = QFileDialog.getOpenFileName(self, filter="텍스트 문서(*.txt);;모든 파일(*.*)")
 
-    """
-    *** 파일 열기 ***
-    ① getOpenFileName( ,제목, 경로(생략하면 현 dir 보여줌), 필터링->.txt 파일만 보여줌. ;; 으로 구분.)
-    """
+        if f_name[0]:
+            with open(f_name[0], encoding='UTF-8') as f:
+                text = f.read()
 
-    # 파일 열기
-    def action_open_slot(self):
-        self.file = QFileDialog.getOpenFileName(self, "open file", "",
-                                           "Text Files(*.txt);;Python Files(*.py);;All Files(*.*)", "")
-        if self.file[0] :
-            with open(self.file[0], 'r') as f: #'r' 은 생략 가능.
-                str_read = f.read()
-            self.plainTextEdit.setPlainText(str_read)   #plainText에 있는 문자열들을 메모장에 써줌.
-            self.open_flag = True #파일을 열었다는 것을 알리는 변수
-        self.setTitle()
-    
-    """
-    *** 글꼴 ***
-    ① 글꼴 화면에서 확인 버튼을 누르면 font[1]에 True, 취소 버튼을 누르면 False 반환.
-    """
-    def action_font_slot(self): #서식-글꼴
-        font = QFontDialog.getFont()   #운영체제에서 제공. Font를 return.
-        if font[1] : # True 이면 폰트값을 변경 해줌.
-            self.plainTextEdit.setFont(font[0])
+            self.path = f_name[0]
+            self.isOpened = True
+            self.pe.setPlainText(text)
 
-    def action_close_slot(self): #끝내기
-        QCoreApplication.instance().quit()
-        print('종료')
+            # Update the title
+            self.update_title(self.path)
 
-    def action_save_slot(self): #파일 저장
-        # print('OK')
-        if self.open_flag :
-            str_write = self.plainTextEdit.toPlainText()
-            with open(self.file[0], 'w') as f:
-                f.write(str_write)
+    def file_save(self):  # 저장(S)
+        print("== File Save Execute ==")
+        if self.isOpened:
+            self._save_to_path(self.path)
+
+            # Update the title
+            self.update_title(self.path)
         else:
-            self.action_save_as_slot()
+            self.file_save_as()
 
-        # print(self.open_flag)
-        # print(self.file)
+    def file_save_as(self):  # 다른 이름으로 저장(A)
+        print("== File Save As Execute ==")
+        f_name = QFileDialog.getSaveFileName(self, filter="텍스트 문서(*.txt);;모든 파일(*.*)")
 
-    def action_cut_slot(self):  #잘라내기
-        self.plainTextEdit.cut()
+        if f_name[0]:
+            self.path = f_name[0]
+            self._save_to_path(self.path)
+            self.isOpened = True
 
-    def action_copy_slot(self): #복사
-        self.plainTextEdit.copy()
+            # Update the title
+            self.update_title(self.path)
 
-    def action_paste_slot(self): #붙여넣기
-        self.plainTextEdit.paste()
+    def _save_to_path(self, f_path):
+        text = self.pe.toPlainText()
+        with open(f_path, 'w', encoding='UTF-8') as f:
+            f.write(text)
 
-    def action_del_slot(self): #삭제
-        self.plainTextEdit.cut()
+    def file_new(self):  # 새로 만들기(N)
+        print("== File Mew Execute ==")
 
-    def action_undo_slot(self): #실행 취소
-        self.plainTextEdit.undo()
+        if self.isTextChanged():
+            # 취소 버튼 클릭 시
+            if self.answer_to_save() != 2:
+                self.pe.clear()
+                self.path = "제목 없음"
+                self.update_title(self.path)
 
-    def action_redo_slot(self): #다시 실행
-        self.plainTextEdit.redo()
+    def isTextChanged(self):
+        current_text = self.pe.toPlainText()
 
-    def action_all_select_slot(self):   #모두 선택
-        self.plainTextEdit.selectAll()
-    """
-    *** 메모장 정보 ***
-    .about(self, 제목, 내용)
-    """
-    def action_about_slot(self): #메모장 정보
-        QMessageBox.about(self, 'PyQt Pad','''
-        만든이 : ABC Lab
-        버전 정보 : version 1.0.0
-        ''')
+        if self.isOpened:
+            # 기존 파일에 저장된 데이터
+            with open(self.path, encoding='UTF-8') as f:
+                text = f.read()
+            if current_text != text:
+                return True
+        else:
+            # 열린 파일은 없는데 작성한 내용이 있는 경우
+            if current_text:
+                return True
 
-    def closeEvent(self, QCloseEvent):  #닫기 버튼 눌렀을 때
-        save = self.save_edited()
-        #print(1)
-        if save == 2 :
-            QCloseEvent.ignore()
-        # print(self.file)
+        return False
+
+    def answer_to_save(self):
+        # 사용자에게 저장 여부 요청
+        msgBox = QMessageBox()
+        msgBox.setWindowTitle("Penguin's 메모장")
+        msgBox.setText(f"변경 내용을 {self.path}에 저장하시겠습니까?")
+        msgBox.addButton("저장", QMessageBox.YesRole)  # 0
+        msgBox.addButton("저장 안 함", QMessageBox.NoRole)  # 1
+        msgBox.addButton("취소", QMessageBox.RejectRole)  # 2
+        ans = msgBox.exec_()
+
+        if ans == 0:
+            self.file_save()
+        else:
+            return ans
+
+    def set_font(self):  # 글꼴 설정
+        font = QFontDialog.getFont(self.font(), self, "글꼴")  # OS 에서 제공
+        if font[1]:
+            self.pe.setFont(font[0])
+
+    def form_info(self):  # 메모장 정보
+        dlg = AboutDialog(self)
+        dlg.exec_()
+
+    def closeEvent(self, event):  # 닫기 버튼 눌렀을 때
+        print("== Run close Event ==")
+        if self.isTextChanged():
+            # 취소 버튼 클릭 시
+            if self.answer_to_save() == 2:
+                event.ignore()
+        else:
+            event.accept()
 
 
-app = QApplication(sys.argv)
-mainWindow = Exam()
-mainWindow.show()
-sys.exit(app.exec_())   # 이벤트 루프
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    winForm = Form()
+    winForm.show()
+    sys.exit(app.exec_())  # 이벤트 루프
