@@ -103,13 +103,17 @@ class Form(QMainWindow, form_window):
 
     def file_new(self):  # 새로 만들기(N)
         print("== File Mew Execute ==")
-
+        print(self.isTextChanged())
+        print(self.isOpened)
         if self.isTextChanged():
             # 취소 버튼 클릭 시
-            if self.answer_to_save() != 2:
-                self.pe.clear()
-                self.path = "제목 없음"
-                self.update_title(self.path)
+            if self.answer_to_save() == 2:
+                return 0
+
+        self.pe.clear()
+        self.path = "제목 없음"
+        self.update_title(self.path)
+        self.isOpened = False
 
     def isTextChanged(self):
         current_text = self.pe.toPlainText()
