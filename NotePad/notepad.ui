@@ -60,6 +60,7 @@
      <string>파일(&amp;F)</string>
     </property>
     <addaction name="action_new"/>
+    <addaction name="action_win"/>
     <addaction name="action_open"/>
     <addaction name="action_save"/>
     <addaction name="action_save_as"/>
@@ -199,6 +200,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="action_win">
+   <property name="text">
+    <string>새 창(&amp;W)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
    </property>
   </action>
  </widget>

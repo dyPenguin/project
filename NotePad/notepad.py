@@ -16,12 +16,14 @@ class Form(QMainWindow, form_window):
 
         self.path = "제목 없음"
         self.isOpened = False  # 파일 오픈 상태 확인
+        self.windows = list()
 
         # Update the title
         self.update_title(self.path)
 
     def initUI(self):
         # File menu
+        self.action_win.triggered.connect(self.add_window)
         self.action_open.triggered.connect(self.file_open)
         self.action_save.triggered.connect(self.file_save)
         self.action_save_as.triggered.connect(self.file_save_as)
@@ -53,6 +55,12 @@ class Form(QMainWindow, form_window):
             title = "*" + title
 
         self.setWindowTitle(f"{title} - Penguin's 메모장")
+
+    def add_window(self):   # 새 창(W)
+        print("== Add window Execute ==")
+        new_win = Form()
+        self.windows.append(new_win)
+        new_win.show()
 
     def file_open(self):  # 열기(O)
         print("== File Open Execute ==")
