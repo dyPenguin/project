@@ -110,20 +110,20 @@ class Form(QMainWindow, form_window):
             if self.answer_to_save() == 2:
                 return 0
 
-        self.pe.clear()
-        self.path = "제목 없음"
-        self.update_title(self.path)
         self.isOpened = False
+        self.pe.clear()
+        self.update_title("제목 없음")
 
     def isTextChanged(self):
         current_text = self.pe.toPlainText()
 
         if self.isOpened:
             # 기존 파일에 저장된 데이터
-            with open(self.path, encoding='UTF-8') as f:
-                text = f.read()
-            if current_text != text:
-                return True
+            if self.path:
+                with open(self.path, encoding='UTF-8') as f:
+                    text = f.read()
+                if current_text != text:
+                    return True
         else:
             # 열린 파일은 없는데 작성한 내용이 있는 경우
             if current_text:
