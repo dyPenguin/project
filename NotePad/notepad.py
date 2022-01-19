@@ -3,7 +3,7 @@ import sys
 
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-from infoDig import AboutDialog
+from subForm import AboutDialog, FindDialog
 
 form_window = uic.loadUiType('./notepad.ui')[0]
 
@@ -38,6 +38,7 @@ class Form(QMainWindow, form_window):
         self.action_copy.triggered.connect(self.pe.copy)
         self.action_paste.triggered.connect(self.pe.paste)
         self.action_del.triggered.connect(self.pe.cut)
+        self.action_find.triggered.connect(self.find_word)
 
         # Option menu
         self.action_font.triggered.connect(self.set_font)
@@ -171,6 +172,11 @@ class Form(QMainWindow, form_window):
                 event.ignore()
         else:
             event.accept()
+
+    def find_word(self):   # 찾기(F)
+        print("== Run Find Word Function ==")
+        dlg = FindDialog(self)
+        dlg.exec_()
 
 
 if __name__ == "__main__":
