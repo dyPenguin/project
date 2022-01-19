@@ -82,6 +82,7 @@
     <addaction name="action_find"/>
     <addaction name="separator"/>
     <addaction name="action_all_select"/>
+    <addaction name="action_datetime"/>
    </widget>
    <widget class="QMenu" name="menu_o">
     <property name="title">
@@ -218,6 +219,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="action_datetime">
+   <property name="text">
+    <string>시간/날짜(&amp;D)</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
    </property>
   </action>
  </widget>

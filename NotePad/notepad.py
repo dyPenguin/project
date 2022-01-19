@@ -4,6 +4,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from subForm import AboutDialog, FindDialog
+from datetime import datetime
 
 form_window = uic.loadUiType('./notepad.ui')[0]
 
@@ -39,6 +40,7 @@ class Form(QMainWindow, form_window):
         self.action_paste.triggered.connect(self.pe.paste)
         self.action_del.triggered.connect(self.pe.cut)
         self.action_find.triggered.connect(self.find_word)
+        self.action_datetime.triggered.connect(self.insert_datetime)
 
         # Option menu
         self.action_font.triggered.connect(self.set_font)
@@ -177,6 +179,10 @@ class Form(QMainWindow, form_window):
         print("== Run Find Word Function ==")
         dlg = FindDialog(self)
         dlg.exec_()
+
+    def insert_datetime(self):   # 시간/날짜
+        current_time = datetime.now()
+        self.pe.textCursor().insertText(current_time.strftime('%Y-%m-%d %H:%M:%S'))
 
 
 if __name__ == "__main__":
