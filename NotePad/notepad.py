@@ -178,7 +178,7 @@ class Form(QMainWindow, form_window):
     def find_word(self):   # 찾기(F)
         print("== Run Find Word Function ==")
         dlg = FindDialog(self)
-        dlg.exec_()
+        dlg.show()
 
     def insert_datetime(self):   # 시간/날짜
         current_time = datetime.now()
