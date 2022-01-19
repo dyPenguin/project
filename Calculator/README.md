@@ -13,7 +13,7 @@ The calculator application implemented in Python using PyQt5. The Ui was designe
 
 
 ## UI Design
-<img src="https://user-images.githubusercontent.com/69224744/149775020-6862b5c5-dc62-43f4-96a8-4dda09844ac5.gif" title="실행 결과" hspace="10"/>
+<img src="https://user-images.githubusercontent.com/69224744/150070708-9cdbc6f3-01f8-434d-9696-82ae390e707c.gif" title="실행 결과" hspace="10"/>
 
 
 ## Windows based:
