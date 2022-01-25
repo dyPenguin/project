@@ -50,7 +50,7 @@ class Form(QMainWindow, form_window):
         self.pe.textChanged.connect(lambda: self.update_title(self.path))
 
     def update_title(self, title):
-        print("== Update Title Execute ==")
+        # print("== Update Title Execute ==")
         if title != "제목 없음":
             title = os.path.splitext(os.path.basename(self.path))[0]
 
@@ -60,13 +60,13 @@ class Form(QMainWindow, form_window):
         self.setWindowTitle(f"{title} - Penguin's 메모장")
 
     def add_window(self):   # 새 창(W)
-        print("== Add window Execute ==")
+        # print("== Add window Execute ==")
         new_win = Form()
         self.windows.append(new_win)
         new_win.show()
 
     def file_open(self):  # 열기(O)
-        print("== File Open Execute ==")
+        # print("== File Open Execute ==")
         if self.isTextChanged():
             # 내용이 변경된 상태에서 취소 버튼 클릭 시
             if self.answer_to_save() == 2:
@@ -86,17 +86,18 @@ class Form(QMainWindow, form_window):
             self.update_title(self.path)
 
     def file_save(self):  # 저장(S)
-        print("== File Save Execute ==")
+        # print("== File Save Execute ==")
         if self.isOpened:
             self._save_to_path(self.path)
 
             # Update the title
             self.update_title(self.path)
         else:
-            self.file_save_as()
+            if self.file_save_as():
+                return -1
 
     def file_save_as(self):  # 다른 이름으로 저장(A)
-        print("== File Save As Execute ==")
+        # print("== File Save As Execute ==")
         f_name = QFileDialog.getSaveFileName(self, filter="텍스트 문서(*.txt);;모든 파일(*.*)")
 
         if f_name[0]:
@@ -106,6 +107,8 @@ class Form(QMainWindow, form_window):
 
             # Update the title
             self.update_title(self.path)
+        else:
+            return -1
 
     def _save_to_path(self, f_path):
         text = self.pe.toPlainText()
@@ -113,9 +116,7 @@ class Form(QMainWindow, form_window):
             f.write(text)
 
     def file_new(self):  # 새로 만들기(N)
-        print("== File Mew Execute ==")
-        print(self.isTextChanged())
-        print(self.isOpened)
+        # print("== File Mew Execute ==")
         if self.isTextChanged():
             # 취소 버튼 클릭 시
             if self.answer_to_save() == 2:
@@ -153,7 +154,8 @@ class Form(QMainWindow, form_window):
         ans = msgBox.exec_()
 
         if ans == 0:
-            self.file_save()
+            if self.file_save():
+                return 2   # 저장 취소 시
         else:
             return ans
 
@@ -167,7 +169,7 @@ class Form(QMainWindow, form_window):
         dlg.exec_()
 
     def closeEvent(self, event):  # 닫기 버튼 눌렀을 때
-        print("== Run close Event ==")
+        # print("== Run close Event ==")
         if self.isTextChanged():
             # 취소 버튼 클릭 시
             if self.answer_to_save() == 2:
@@ -176,7 +178,7 @@ class Form(QMainWindow, form_window):
             event.accept()
 
     def find_word(self):   # 찾기(F)
-        print("== Run Find Word Function ==")
+        # print("== Run Find Word Function ==")
         dlg = FindDialog(self)
         dlg.show()
 
