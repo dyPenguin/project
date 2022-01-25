@@ -9,7 +9,7 @@ The calculator application implemented in Python using PyQt5. The Ui was designe
 <a href="https://qt-brandbook.webflow.io">
 <img src="https://img.shields.io/badge/Qt-41CD52?style=flat&logo=Qt&logoColor=white&link=https://qt-brandbook.webflow.io/"></a>
 
-#### [실행 파일(.exe) 다운](https://drive.google.com/drive/folders/1vZghImyiCG-NkEmZGmCOKZh0WyjPHCXP?usp=sharing)
+#### [실행 파일(.exe) 다운](https://vo.la/qMtA3)
 
 
 ## UI Design
